@@ -1,0 +1,91 @@
+{% extends "profile_app/base.html" %}
+{% load static %}
+{% block content %}
+
+<div class="tab-content" id="myTabContent">
+  <div class="tab-pane fade active show" id="home" role="tabpanel" aria-labelledby="home-tab">
+    <div class="row recent_update_text">
+      <div class="col-lg-3">
+          <div class="pretty-image" style="background-image: linear-gradient(#5e3d7e, #2e788a);">
+
+          </div>
+      </div>
+      <div class="col-lg-9">
+        <div class="section_content">
+          <h6>Profile</h6>
+          <h1>Edit Details</h1>
+          <form  method="post" action="{% url 'update_info' %}">
+            {% csrf_token %}
+            <p>
+              <label for="username">Username: </label>
+          		<input type="text" name="username" value="{{user.username}}">
+          		{% if not basic_info_form.username.value %}
+          			<span data-placeholder={{user.username}}></span>
+          		{% endif %}
+            </p>
+
+              <p>
+                <label for="email">Email: </label>
+                <input type="text" name="email"  value="{{user.email}}">
+                {% if not basic_info_form.email.value %}
+                  <span data-placeholder="{{user.email}}"></span>
+                {% endif %}
+
+              </p>
+              <input class="primary_btn" type="submit" name="" value="Update Changes">
+
+          </form>
+          <p></p>
+          <form  method="post" action="{ url 'update_pw'}">
+            {% csrf_token %}
+            <p>
+              <label for="password">Password: </label>
+              <input type="password" name="password" value="">
+
+              <!-- {% if update_password_form.password.errors %}
+                {{ update_password_form.password.errors }}
+              {% endif %} -->
+              </p>
+
+              <p>
+                  <label for="password_again">Repeat Pasword: </label>
+                  <input type="password" name="password_again"  value="">
+
+                <!-- {% if update_password_form.password_again.errors %}
+                    {{ update_password_form.password_again.errors }}
+                {% endif %} -->
+
+              </p>
+              <input class="primary_btn" type="submit" name="" value="Update Changes">
+          </form>
+
+          <p></p>
+          <form method="post" action="{ url 'update_pic'}">
+            {% csrf_token %}
+              <p>
+                <!-- {{ profile_form.profile_picture.errors }} -->
+                {{ profile_form.profile_picture.label_tag }}
+                {{ profile_form.profile_picture }}
+              </p>
+              <input class="primary_btn" type="submit" name="" value="Update Changes">
+
+          </form>
+
+          {% if messages %}
+          Errors:
+            {% for message in messages %}
+
+                  {{ message }}
+
+            {% endfor %}
+          {% endif %}
+
+
+
+        </div>
+      </div>
+    </div
+  </div>
+</div>
+
+{% endblock %}
